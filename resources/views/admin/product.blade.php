@@ -16,14 +16,6 @@
 					<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 tmargin">
 						<input type="text" class="form-control" id="TenSP" placeholder="Tên SP">
 					</div>
-
-					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right tmargin">
-						<label class="control-label"> Thông tin sản phẩm:</label>
-					</div>
-					<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 tmargin">
-						<textarea id="TTSP" placeholder="Thông tin sản phẩm" class="form-control" rows="3" required="required"></textarea>
-					</div>
-
 					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right tmargin">
 						<label>Danh mục sản phẩm:</label>
 					</div>
@@ -34,7 +26,12 @@
 						@endforeach
 						</select>
 					</div>
-					
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right tmargin">
+						<label class="control-label"> Thông tin sản phẩm:</label>
+					</div>
+					<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 tmargin">
+						<textarea id="TTSP" placeholder="Thông tin sản phẩm" class="form-control" rows="3" required="required"></textarea>
+					</div>
 					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right tmargin">
 						<label>Hình ảnh:</label>
 					</div>
@@ -70,7 +67,7 @@
 								<td><img src="{{$p->images}}" alt="{{$p->name}}" class="productimg"></td>
 								<td>{{$p->name}}</td>
 								<td>{{$p->Mname}}</td>
-								<td>{{str_limit($p->description, $limit = 300, $end = '...')}}</td>
+								<td>{!! $p->description !!}</td>
 								<td class="TdQuickMenu">
 									<a pid="{{$p->id}}" pname="{{$p->name}}" pdes="{{$p->description}}" pmenu="{{$p->menu_id}}" style="margin-right:10px;" class="prod_edit text-primary"><i class="fa fa-pencil-square-o"></i> </a>
 									<a pid="{{$p->id}}" class="prod_delete text-danger"><i class="fa fa-times"></i></a>
@@ -88,10 +85,16 @@
 
 @section('body.script')
 <script type="text/javascript">
+	$(document).ready(function() {
+      $('#TTSP').summernote({
+        lang: 'vi-VN',
+        height:200
+      });
+    });
 	$('#ProductDT').stupidtable();
 	$('#btnCancel').on('click',function(){
 		$('#TenSP').val("");
-      	$('#TTSP').val("");
+      	$('#TTSP').summernote('reset');
       	$('#HinhAnh').val("");
       	$('#btnEdit').addClass('hidden');
       	$('#btnAdd').removeClass('hidden');
@@ -102,7 +105,8 @@
 		$('#btnAdd').addClass('hidden');
 		$('#btnEdit').removeClass('hidden');
 		$('#TenSP').val($(this).attr('pname'));
-		$('#TTSP').val($(this).attr('pdes'));
+		$('#TTSP').summernote('code', $(this).attr('pdes'));
+		//$('#TTSP').val($(this).attr('pdes'));
 		$('#DanhMuc').val($(this).attr('pmenu'));
 		$('#btnEdit').attr('pid',$(this).attr('pid'));
 	})
@@ -175,10 +179,13 @@
 	function EditProduct(ID){
 		var formData = new FormData;
 		var uploadfile = $('input[name=imageup]')[0].files[0];
+		var TTSP = $('#TTSP').val();
+		//TTSP.replace(/\"/g, "\'");
+		
 		formData.append('id',ID);
 		formData.append('menu_id',$('#DanhMuc').val());
 		formData.append('name',$('#TenSP').val());
-		formData.append('description',$('#TTSP').val());
+		formData.append('description',TTSP);
 		formData.append('images',uploadfile);
 		$.ajax({
             headers: {
@@ -223,9 +230,11 @@
 	function CreateProduct(){
 		var formData = new FormData;
 		var uploadfile = $('input[name=imageup]')[0].files[0];
+		var TTSP = $('#TTSP').val();
+		//TTSP.replace(/\"/g, "\'");
 		formData.append('menu_id',$('#DanhMuc').val());
 		formData.append('name',$('#TenSP').val());
-		formData.append('description',$('#TTSP').val());
+		formData.append('description',TTSP);
 		formData.append('images',uploadfile);
 		$.ajax({
             headers: {
@@ -251,7 +260,7 @@
 				row += "<a pid='" + data.id + "' class='prod_delete text-danger'><i class='fa fa-times'></i></a>"
 		      	row += "</td>";
 		      	row +="</tr>";
-		      	$('#ProductDT tbody').append(row);
+		      	$('#ProductDT tbody').prepend(row);
 		      	$('#TenSP').val("");
 		      	$('#TTSP').val("");
 		      	$('#HinhAnh').val("");

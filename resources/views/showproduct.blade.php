@@ -82,7 +82,7 @@
                 <div class="col-md-12">
                     <h4 class="title">Thông tin sản phẩm</h4>
                     <div class="ProductDescription">
-                       {{$Product->description}} 
+                       {!!$Product->description!!} 
                     </div>
                 </div>
                 <div class="col-md-12">

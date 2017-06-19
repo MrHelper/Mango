@@ -301,10 +301,10 @@
                         <div class="pi-img-wrapper">
                             <img src="{{$n->images}}" class="img-responsive starproduct" alt="Berry Lace Dress">
                             <div>
-                                <a href="#" class="btn">View</a>
+                                <a href="{{route('show.products',$n->id)}}" class="btn">View</a>
                             </div>
                         </div>
-                        <h3><a href="#">{{$n->name}}</a></h3>
+                        <h3><a href="{{route('show.products',$n->id)}}">{{$n->name}}</a></h3>
                     </div>
                 </div>
                 @endforeach

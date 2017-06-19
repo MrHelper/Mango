@@ -17,7 +17,7 @@ class CreaTableProducts extends Migration
             $table->increments('id');
             $table->integer('menu_id');
             $table->string('name');
-            $table->text('description');
+            $table->string('description',9999999999);
             $table->text('images');
             $table->boolean('star');
             $table->timestamps();

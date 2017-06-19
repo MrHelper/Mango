@@ -13,7 +13,8 @@
     <link href="{{ asset('/css/simple-line-icons.css')}}" rel="stylesheet">
     <!-- Main styles for this application -->
     <link href="{{ asset('/css/admin-style.css')}}" rel="stylesheet">
-
+    <link href="{{ asset('/css/summernote.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css" />
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
     <header class="app-header navbar">
@@ -63,6 +64,8 @@
     <script src="{{ asset('/js/jquery-1.11.1.min.js')}}"></script>
     <script src="{{ asset('/js/bootstrap.js')}}"></script>
     <script src="{{ asset('/js/stupidtable.min.js')}}"></script>
+    <script src="{{ asset('/js/summernote.min.js')}}"></script>
+    <script src="{{ asset('/js/summernote-vi-VN.min.js')}}"></script>
     
 
 
